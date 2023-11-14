@@ -1,0 +1,21 @@
+{
+    "name": "rsgrinko/outline-api-client",
+    "description": "Simple API client for Outline",
+    "keywords": ["outline","vpn","outline php"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Grinko",
+            "email": "rsgrinko@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Outline\\OutlineApiClient\\": "src/"}
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}

@@ -1,7 +1,8 @@
 <?php
 
-    use rsgrinko\Outline\{Exceptions\OutlineException, OutlineApiClient, OutlineKey};
-    use rsgrinko\Outline\Exceptions\OutlineApiException;
+    namespace rsgrinko\Outline;
+
+    use rsgrinko\Outline\Exceptions\OutlineException;
 
 
     /**
@@ -13,7 +14,7 @@
         private OutlineKey $keyObject;
 
         /**
-         * @throws OutlineApiException
+         * @throws OutlineException
          */
         public function __construct(string $url)
         {

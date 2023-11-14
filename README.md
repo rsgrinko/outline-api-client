@@ -22,41 +22,33 @@ PHP >= 7.4
 
 require 'vendor/autoload.php';
 
-use OutlineApiClient\OutlineApiClient;
+use rsgrinko\Outline\Outline;
 
 try {
-
-    // Your Outline server address
-    $serverUrl = 'https://127.0.0.1:3333/YZwl3D1r-B6cNYzQ';
-
-    $api = new OutlineApiClient($serverUrl);
-
+    $outlineObject = new Outline('https://127.0.0.1:1234/EUwl3A2e-Af6cNeQs');
+    $clientObject  = $outlineObject->getClientObject();
     // Get an array of all server keys
-    $keysList = $api->getKeys();
+    $keysList = $clientObject->getKeys();
 
     // Create new key
-    $key = $api->create();
+    $key = $clientObject->create();
 
     // Rename exist key.
-    // Passing key id and new name
-    $api->setName($key['id'], 'New key name');
+    $clientObject->setName($key['id'], 'My new key');
 
-    // Set transfer data limit for key.
-    // Passing key id and limit in bytes.
-    // In the example set 5MB
-    $api->setLimit($key['id'], 5 * 1024 * 1024);
+    // Set transfer data limit for key (in bytes)
+    $clientObject->setLimit($key['id'], 5 * 1024 * 1024);
 
     // Remove key limit
-    // Passing key id
-    $api->deleteLimit($key['id']);
+    $clientObject->deleteLimit($key['id']);
 
     // Delete key
-    $api->delete($key['id']);
+    $clientObject->delete($key['id']);
 
     // Get an array of used traffic for all keys
-    $transferData = $api->metricsTransfer();
-} catch (\Exception $e) {
-    // Handle exception
+    $transferData = $clientObject->metricsTransfer();
+} catch (Throwable $t) {
+    // Handle exception...
 }
 ```
 
@@ -68,18 +60,15 @@ Interaction with an existing key
 <?php
 require 'vendor/autoload.php';
 
-use OutlineApiClient\OutlineKey;
+use rsgrinko\Outline\Outline;
 
 try {
 
-    // Your Outline server address
-    $serverUrl = 'https://127.0.0.1:3333/YZwl3D1r-B6cNYzQ';
-
-    // Key id
-    $keyId = 1;
+    $outlineObject = new Outline('https://127.0.0.1:1234/EUwl3A2e-Af6cNeQs');
+    $keyObject     = $outlineObject->getKeyObject();
     
     // Initializing an object and getting key data
-    $key = (new OutlineKey($serverUrl))->load($keyId);
+    $key = $keyObject->load(1);
     
     // Get key id
     $key->getId();
@@ -94,12 +83,9 @@ try {
     $key->getAccessUrl();
 
     // Rename exist key.
-    // Passing key id and new name
-    $key->rename('New name');
+    $key->rename('New key name');
 
-    // Set transfer data limit for key.
-    // Passing limit in bytes.
-    // In the example set 5MB
+    // Set transfer data limit for key (in bytes)
     $key->limit(5 * 1024 * 1024);
 
     // Remove key traffic limit
@@ -108,8 +94,8 @@ try {
     // Delete key
     $key->delete();
     
-} catch (\Exception $e) {
-    // Handle exception
+} catch (Throwable $e) {
+    // Handle exception...
 }
 
 ```
@@ -120,17 +106,17 @@ Creating a new key on the server
 <?php
 require 'vendor/autoload.php';
 
-use OutlineApiClient\OutlineKey;
+use rsgrinko\Outline\Outline;
 
 try {
-    // Your Outline server address
-    $serverUrl = 'https://127.0.0.1:3333/YZwl3D1r-B6cNYzQ';
+    $outlineObject = new Outline('https://127.0.0.1:1234/EUwl3A2e-Af6cNeQs');
+    $keyObject     = $outlineObject->getKeyObject();
     
-    // Initializing an object and creating new key
-    // Passing to method create() key name and traffic limit (optional)
-    $key = (new OutlineKey($serverUrl))->create('Key name', 5 * 1024 * 1024);
+    
+    // Create new key
+    $key = $keyObject->create('Key name', 5 * 1024 * 1024);
 
-} catch (\Exception $e) {
-
+} catch (Throwable $e) {
+    // Handle exception...
 }
 ```
